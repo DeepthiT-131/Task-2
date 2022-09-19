@@ -21,9 +21,9 @@ Parameters:
     Type: String
     Default: teacher_details
   BucketName:
-    Description: Profiles
+    Description: storageforprofiles
     Type: String
-    Default: Profiles
+    Default: storageforprofiles
 
 Resources:
   GetDataFunction:
@@ -54,6 +54,11 @@ Resources:
           Properties:
             Path: /teachers
             Method: get
+        Query:
+          Type: Api
+          Properties:
+            Path: /querydetails
+            Method: any
     
   PutDataFunction:
     Type: AWS::Serverless::Function
@@ -83,6 +88,38 @@ Resources:
           Properties:
             Path: /teachers
             Method: post
+
+  FunctionforProfiles:
+    Type: AWS::Serverless::Function 
+    Properties:
+      FunctionName: functionforprofiles
+      CodeUri: profiles/
+      Policies:
+       - AmazonS3FullAccess
+      Handler: index.lambdaHandler
+      Runtime: nodejs16.x
+      Architectures:
+        - x86_64
+      Environment:
+        Variables:
+          BucketName: !Ref BucketName
+
+      Events:
+          StudentProfiles:
+            Type: Api
+            Properties:
+              Path: /studentprofiles
+              Method: any
+          TeacherProfiles:
+            Type: Api
+            Properties:
+              Path: /teacherprofiles
+              Method: any
+
+  s3bucketforprofiles:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Ref BucketName
    
   StudentDetailsTable:
     Type: AWS::DynamoDB::Table
@@ -146,3 +183,9 @@ Outputs:
   TeacherApi:
     Description: API Gateway endpoint URL for Prod stage for Get Data function
     Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/teachers"
+  StudentProfilesApi:
+    Description: "API Gateway endpoint URL for Prod stage for Hello World function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/studentprofiles/"
+  TeacherProfilesApi:
+    Description: "API Gateway endpoint URL for Prod stage for Hello World function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/teacherprofiles/"
