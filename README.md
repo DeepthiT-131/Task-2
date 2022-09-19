@@ -21,11 +21,13 @@ note : In both Student and Teachers Table Department is the Global Secondary Ind
       - S3 bucket is used for storing the profile_pic of Students and Teachers 
       
 * There are 3 Lambda functions:
-      - putdatafunction 
-      This Function helps us to add the data to the student and teachers table 
-
+*
+     
       - getdata function
       This function helps to get the student and teacher details and also queries the details according to the department.
+      
+       - putdatafunction 
+      This Function helps us to add the data to the student and teachers table 
    
       - functionforprofiles
       This is a function for uploading and retriving the profile_pic of students and teachers 
