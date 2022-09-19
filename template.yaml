@@ -54,11 +54,16 @@ Resources:
           Properties:
             Path: /teachers
             Method: get
-        Query:
+        QueryStudents:
           Type: Api
           Properties:
-            Path: /querydetails
-            Method: any
+            Path: /querystudentsdetails
+            Method: get
+        QueryTeachers:
+          Type: Api
+          Properties:
+            Path: /queryteachersdetails
+            Method: get
     
   PutDataFunction:
     Type: AWS::Serverless::Function
@@ -189,3 +194,10 @@ Outputs:
   TeacherProfilesApi:
     Description: "API Gateway endpoint URL for Prod stage for Hello World function"
     Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/teacherprofiles/"
+  QueryTeachersApi:
+    Description: "API Gateway endpoint URL for Prod stage for Hello World function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/queryteachersdetails/"
+  QueryStudentsApi:
+    Description: "API Gateway endpoint URL for Prod stage for Hello World function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/querystudentsdetails/"
+  
